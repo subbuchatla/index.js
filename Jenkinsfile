@@ -7,17 +7,19 @@ pipeline {
             }
         }
         stage('Test') {
-            steps {
-                // Install Node.js using Chocolatey (for Windows) and run npm install
-                bat '''
-                choco install nodejs -y
-                npm install
-                '''
+    steps {
+        // Install Node.js using Chocolatey and install npm dependencies
+        bat '''
+        choco install nodejs -y
+        npm install
+        '''
 
-                // Run npm tests
-                bat 'npm test'
-            }
-        }
+        // Run npm tests
+        bat '''
+        npm test
+        '''
+    }
+}
         stage('Build') {
             steps {
                 // Run the build script using npm
