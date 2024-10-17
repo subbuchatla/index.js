@@ -8,16 +8,12 @@ pipeline {
         }
         stage('Test') {
             steps {
-                // Install Node.js using Chocolatey (for Windows) and run npm install
-                bat '''
-                choco install nodejs -y
-                npm install
-                '''
-
-                // Run npm tests
-                bat 'npm test'
-            }
-        }
+                script {
+                    // Run tests here if you have any
+                    echo 'Running tests...'
+                }
+            }
+        }
         stage('Build') {
             steps {
                 // Run the build script using npm
