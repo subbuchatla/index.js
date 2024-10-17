@@ -1,42 +1,30 @@
 pipeline {
-    agent any
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-       stage("Test") {
-            steps {
-                // Install Node.js (if not already installed) using Chocolatey package manager
-                bat '''
-                choco install nodejs -y
-                npm install
-                '''
+    agent any 
 
-                // Run npm tests
-                bat 'npm test'
-            }
-        }
+    stages {
         stage('Build') {
             steps {
-                // Run the build script using npm
-                bat 'npm run build'
+                script {
+                    // Build your Docker image
+                    bat 'docker build -t my-nodejs-app .'
+                }
             }
         }
-        stage('Build Docker Image') {
+        stage('Test') {
             steps {
-                // Build Docker image for the application
-                bat 'docker build -t my-node-app:1.0 .'
+                script {
+                    // Run tests here if you have any
+                    echo 'Running tests...'
+                }
             }
         }
         stage('Deploy') {
             steps {
                 script {
-                    // Echo deployment message (customize for actual deployment steps)
+                    // Deploy your Docker image
                     echo 'Deploying application...'
                 }
             }
-        }
-    }
+        }
+    }
 }
